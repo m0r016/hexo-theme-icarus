@@ -38,6 +38,10 @@ module.exports = class extends Component {
                             {page.date && <span class="level-item" dangerouslySetInnerHTML={{
                                 __html: _p('article.created_at', `<time dateTime="${date_xml(page.date)}" title="${new Date(page.date).toLocaleString()}">${date(page.date)}</time>`)
                             }}></span>}
+                            {/* Last Update Date */}
+                            {page.updated && <span class="level-item" dangerouslySetInnerHTML={{
+                                __html: _p('article.updated_at', `<time dateTime="${date_xml(page.updated)}" title="${new Date(page.updated).toLocaleString()}">${date(page.updated)}</time>`)
+                            }}></span>}
                             {/* author */}
                             {page.author ? <span class="level-item"> {page.author} </span> : null}
                             {/* Categories */}
@@ -76,8 +80,8 @@ module.exports = class extends Component {
                         {index ? <a href={url_for(page.link || page.path)} class="image is-7by3">
                             <img class="fill" src={cover} alt={page.title || cover} />
                         </a> : <span class="image is-7by3">
-                                <img class="fill" src={cover} alt={page.title || cover} />
-                            </span>}
+                            <img class="fill" src={cover} alt={page.title || cover} />
+                        </span>}
                     </div> : null}
                     {/* Content/Excerpt */}
                     <div class="content" dangerouslySetInnerHTML={{ __html: index && page.excerpt ? page.excerpt : page.content }}></div>
