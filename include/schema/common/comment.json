@@ -33,9 +33,6 @@
         },
         {
             "$ref": "/comment/valine.json"
-        },
-        {
-            "$ref": "/comment/waline.json"
         }
     ]
 }

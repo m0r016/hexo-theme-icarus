@@ -26,23 +26,12 @@ module.exports = class extends Component {
         const indexLaunguage = config.language || 'en';
         const language = page.lang || page.language || config.language || 'en';
         const cover = page.cover ? url_for(page.cover) : null;
-        const updateTime = article && article.update_time !== undefined ? article.update_time : true;
-        const isUpdated = page.updated && !moment(page.date).isSame(moment(page.updated));
-        const shouldShowUpdated = page.updated && ((updateTime === 'auto' && isUpdated) || updateTime === true);
 
         return <Fragment>
             {/* Main content */}
             <div class="card">
-                {/* Thumbnail */}
-                {cover ? <div class="card-image">
-                    {index ? <a href={url_for(page.link || page.path)} class="image is-7by3">
-                        <img class="fill" src={cover} alt={page.title || cover} />
-                    </a> : <span class="image is-7by3">
-                        <img class="fill" src={cover} alt={page.title || cover} />
-                    </span>}
-                </div> : null}
+                {/* Metadata */}
                 <article class={`card-content article${'direction' in page ? ' ' + page.direction : ''}`} role="article">
-                    {/* Metadata */}
                     {page.layout !== 'page' ? <div class="article-meta is-size-7 is-uppercase level is-mobile">
                         <div class="level-left">
                             {/* Creation Date */}
@@ -50,7 +39,7 @@ module.exports = class extends Component {
                                 __html: _p('article.created_at', `<time dateTime="${date_xml(page.date)}" title="${new Date(page.date).toLocaleString()}">${date(page.date)}</time>`)
                             }}></span>}
                             {/* Last Update Date */}
-                            {shouldShowUpdated && <span class="level-item" dangerouslySetInnerHTML={{
+                            {page.updated && <span class="level-item" dangerouslySetInnerHTML={{
                                 __html: _p('article.updated_at', `<time dateTime="${date_xml(page.updated)}" title="${new Date(page.updated).toLocaleString()}">${date(page.updated)}</time>`)
                             }}></span>}
                             {/* author */}
@@ -83,9 +72,17 @@ module.exports = class extends Component {
                         </div>
                     </div> : null}
                     {/* Title */}
-                    {page.title !== '' ? <h1 class="title is-3 is-size-4-mobile">
+                    <h1 class="title is-3 is-size-4-mobile">
                         {index ? <a class="link-muted" href={url_for(page.link || page.path)}>{page.title}</a> : page.title}
-                    </h1> : null}
+                    </h1>
+                    {/* Thumbnail */}
+                    {cover ? <div class="card-image">
+                        {index ? <a href={url_for(page.link || page.path)} class="image is-7by3">
+                            <img class="fill" src={cover} alt={page.title || cover} />
+                        </a> : <span class="image is-7by3">
+                            <img class="fill" src={cover} alt={page.title || cover} />
+                        </span>}
+                    </div> : null}
                     {/* Content/Excerpt */}
                     <div class="content" dangerouslySetInnerHTML={{ __html: index && page.excerpt ? page.excerpt : page.content }}></div>
                     {/* Licensing block */}
